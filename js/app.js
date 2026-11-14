@@ -86,11 +86,11 @@ function ratioForIncomes(incomes,k=monthKey){let counted=(incomes||[]).filter(x=
 function migrateMonth(obj,key){if(!obj||!Array.isArray(obj.expenses))return obj;obj=cleanMonthState(obj);data=obj;if(!Array.isArray(obj.incomes))obj.incomes=[];obj.incomes=obj.incomes.filter(i=>!i.autoHousingAdjustment&&i.name!=='Ajustement frais logement');obj.incomes.forEach(i=>{if(i.includeInSplit===undefined)i.includeInSplit=true});if(!obj.logement||typeof obj.logement!=='object')obj.logement={};obj.logement={habite:obj.logement.habite==='carla'?'carla':'julien',mode:obj.logement.mode==='egal'?'egal':'prorata',julien:{depenses:Array.isArray(obj.logement.julien?.depenses)?obj.logement.julien.depenses:[],recettes:Array.isArray(obj.logement.julien?.recettes)?obj.logement.julien.recettes:[]},carla:{depenses:Array.isArray(obj.logement.carla?.depenses)?obj.logement.carla.depenses:[],recettes:Array.isArray(obj.logement.carla?.recettes)?obj.logement.carla.recettes:[]}};if(obj.currentBalanceJulien==null&&obj.currentBalance!==undefined&&obj.currentBalance!==null&&obj.currentBalance!=='')obj.currentBalanceJulien=obj.currentBalance;if(obj.currentBalanceJulien===undefined)obj.currentBalanceJulien=null;if(obj.currentBalanceCarla===undefined)obj.currentBalanceCarla=null;delete obj.currentBalance;if(!obj.realBalances||typeof obj.realBalances!=='object')obj.realBalances={};if(!Array.isArray(obj.balanceAdjustments))obj.balanceAdjustments=[];obj.balanceAdjustments=obj.balanceAdjustments.filter(a=>a&&validDateKey(a.date)&&['J','C'].includes(a.person)&&Number.isFinite(Number(a.amount)));if(/^\d{4}-\d{2}-\d{2}$/.test(obj.currentBalanceDate||''))obj.realBalances[obj.currentBalanceDate]={...(obj.realBalances[obj.currentBalanceDate]||{}),J:obj.currentBalanceJulien??null,C:obj.currentBalanceCarla??null};obj.expenses=obj.expenses.filter(e=>!isHousingAdjustment(e));obj.expenses.forEach(e=>migrateExpense(e,key));return obj}
 async function load(){
  const generation=++loadGeneration;
- if(testMode){data=testMonthData.has(monthKey)?structuredClone(testMonthData.get(monthKey)):fresh();migrateMonth(data,monthKey);syncModeBanner();document.getElementById('monthLabel').textContent=monthName(monthKey);render();return}
+ if(testMode){data=testMonthData.has(monthKey)?structuredClone(testMonthData.get(monthKey)):fresh();migrateMonth(data,monthKey);const opening=await resolveMonthOpeningBalances(monthKey);if(generation!==loadGeneration)return;data.openingBalances=opening;syncModeBanner();document.getElementById('monthLabel').textContent=monthName(monthKey);render();return}
  try{
-  if(repository){const loaded=await repository.loadState(monthKey);if(generation!==loadGeneration)return;data=loaded;migrateMonth(data,monthKey)}
-  else {data=fresh();migrateMonth(data,monthKey);showConnection('Non connecté - configurez Supabase dans Réglages','warn')}
- }catch(err){if(generation!==loadGeneration)return;console.error(err);data=fresh();migrateMonth(data,monthKey);repository=null;showConnection('Non connecté - configurez Supabase dans Réglages','error')}
+  if(repository){const loaded=await repository.loadState(monthKey);if(generation!==loadGeneration)return;data=loaded;migrateMonth(data,monthKey);const opening=await resolveMonthOpeningBalances(monthKey);if(generation!==loadGeneration)return;data.openingBalances=opening}
+  else {data=fresh();migrateMonth(data,monthKey);data.openingBalances={J:0,C:0};showConnection('Non connecté - configurez Supabase dans Réglages','warn')}
+ }catch(err){if(generation!==loadGeneration)return;console.error(err);data=fresh();migrateMonth(data,monthKey);data.openingBalances={J:0,C:0};repository=null;showConnection('Non connecté - configurez Supabase dans Réglages','error')}
  if(generation!==loadGeneration)return;
  document.getElementById('monthLabel').textContent=monthName(monthKey);render()
 }
@@ -459,9 +459,12 @@ function accountEvolutionBalanceModel(k=monthKey,events=accountEvolutionBalanceE
  // l'écart entre le solde projeté et le suivant est exposé comme ajustement dérivé.
  for(const person of ['J','C']){
   const anchors=Object.keys(data.realBalances||{}).filter(date=>date.startsWith(k+'-')&&date<=`${k}-${String(today).padStart(2,'0')}`&&balanceRecordFor(date)?.[person]!==null&&balanceRecordFor(date)?.[person]!==undefined&&Number.isFinite(Number(balanceRecordFor(date)[person]))).sort().map(date=>({date,day:Math.max(1,Math.min(days,Number(date.slice(8,10))||1)),value:Number(balanceRecordFor(date)[person])}));
-  if(!anchors.length){balances[person][0]=0;for(let day=1;day<=today;day++)balances[person][day]=Math.round((balances[person][day-1]+actual[person][day]+manual[person][day])*100)/100;for(let day=today+1;day<=days;day++)balances[person][day]=Math.round((balances[person][day-1]+planned[person][day])*100)/100;continue}
-  const first=anchors[0];balances[person][first.day]=Math.round((first.value+(manual[person][first.day]||0))*100)/100;
-  for(let day=first.day-1;day>=0;day--)balances[person][day]=Math.round((balances[person][day+1]-(actual[person][day+1]||0)-(manual[person][day+1]||0))*100)/100;
+  if(!anchors.length){const opening=Number(data.openingBalances?.[person]);balances[person][0]=Number.isFinite(opening)?opening:0;for(let day=1;day<=today;day++)balances[person][day]=Math.round((balances[person][day-1]+actual[person][day]+manual[person][day])*100)/100;for(let day=today+1;day<=days;day++)balances[person][day]=Math.round((balances[person][day-1]+planned[person][day])*100)/100;continue}
+  const first=anchors[0],opening=Number(data.openingBalances?.[person]);balances[person][0]=Number.isFinite(opening)?opening:0;
+  for(let day=1;day<first.day;day++)balances[person][day]=Math.round((balances[person][day-1]+(actual[person][day]||0)+(manual[person][day]||0))*100)/100;
+  const firstProjected=Math.round((balances[person][first.day-1]+(manual[person][first.day]||0))*100)/100,firstGap=Math.round((first.value-firstProjected)*100)/100;
+  if(Math.abs(firstGap)>=0.005)anchorAdjustments.push({type:'balance-adjustment',id:`anchor-gap:${person}:${first.date}`,sub:'anchor-gap',name:`Écart de solde saisi · ${person==='J'?'Julien':'Carla'}`,person,amount:firstGap,checked:true,date:first.date,realDate:first.date,day:first.day,plotDay:first.day,plotDate:first.date,theoreticalDay:first.day,status:`Écart avec le solde d’ouverture reporté : ${eur(firstGap)}`,derived:true,order:-1});
+  balances[person][first.day]=Math.round((first.value+(manual[person][first.day]||0))*100)/100;
   let previousAnchor=first;
   for(const next of anchors.slice(1)){
    for(let day=previousAnchor.day+1;day<=next.day;day++)balances[person][day]=Math.round((balances[person][day-1]+(actual[person][day]||0)+(manual[person][day]||0))*100)/100;
@@ -476,6 +479,26 @@ function accountEvolutionBalanceModel(k=monthKey,events=accountEvolutionBalanceE
  const points=Array.from({length:days+1},(_,day)=>({day,julien:balances.J[day],carla:balances.C[day]})),rowBalances=new Map();
  for(const person of ['J','C'])for(let day=1;day<=days;day++){const own=events.filter(event=>event.person===person&&event.plotDay===day),includes=event=>!(stored&&day===anchor&&event.type!=='balance-adjustment'&&!(event.type==='expense'&&!event.checked&&String(event.status||'').startsWith('À payer'))),includedTotal=own.filter(includes).reduce((sum,event)=>sum+Number(event.amount||0),0);let running=Math.round(((person==='J'?points[day].julien:points[day].carla)-includedTotal)*100)/100;for(const event of own){if(includes(event))running=Math.round((running+Number(event.amount||0))*100)/100;rowBalances.set(event,running)}}
  return {days,today,anchor,stored,rowBalances,points,anchorAdjustments};
+}
+async function resolveMonthOpeningBalances(target){
+ const [year,month]=target.split('-').map(Number);let cursor=new Date(year,month-2,1),history=[],opening={J:0,C:0},found={J:false,C:false},priorData=data,priorMonth=monthKey;
+ try{
+  for(let count=0;count<36;count++){
+   const key=`${cursor.getFullYear()}-${String(cursor.getMonth()+1).padStart(2,'0')}`;
+   let state=testMode?(testMonthData.has(key)?cleanMonthState(testMonthData.get(key)):fresh()):repository?await repository.loadState(key):fresh();
+   state=cleanMonthState(state||fresh());history.push({key,state});
+   for(const date of Object.keys(state.realBalances||{}))for(const person of ['J','C']){const value=state.realBalances[date]?.[person];if(date.startsWith(key+'-')&&value!==null&&value!==undefined&&Number.isFinite(Number(value)))found[person]=true}
+   if(found.J&&found.C)break;
+   cursor=new Date(cursor.getFullYear(),cursor.getMonth()-1,1);
+  }
+  for(const item of history.reverse()){
+   monthKey=item.key;data=migrateMonth(item.state,item.key);data.openingBalances={...opening};
+   const model=accountEvolutionBalanceModel(item.key),end=model.points[model.days];
+   for(const person of ['J','C']){const value=end?.[person==='J'?'julien':'carla'];if(value!==null&&value!==undefined&&Number.isFinite(Number(value)))opening[person]=Math.round(Number(value)*100)/100}
+  }
+ }catch(error){console.warn('Carry-over calculation fallback:',error);opening={J:0,C:0}}
+ finally{if(typeof priorData!=='undefined'){data=priorData;monthKey=priorMonth}}
+ return opening;
 }
 function formatAccountTableDate(value){const date=dateKey(value);return date?`${date.slice(8,10)}/${date.slice(5,7)}/${date.slice(0,4)}`:''}
 function accountEvolutionTableMarkup(k,person){
