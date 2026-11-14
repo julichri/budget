@@ -1,0 +1,143 @@
+
+/* Suivi du mois : disposition précise en trois lignes, sans toucher aux calculs. */
+.tracking-mobile .grid.summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch}
+.tracking-mobile .summary-grid>.tracking-alert-card{grid-column:auto;min-width:0;align-items:stretch;padding:12px;background:linear-gradient(145deg,#2b211f,#211c1b)}
+.tracking-mobile .summary-grid>.tracking-payment-grid{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;min-width:0}
+.tracking-mobile .tracking-payment-grid>.tracking-pair-card{min-width:0;padding:15px;gap:9px}
+.tracking-mobile .summary-grid>.summary-tile:first-child .tracking-split{margin-top:9px}
+.tracking-mobile .summary-grid>.summary-tile:first-child .tracking-split span{font-size:clamp(9px,2.6vw,12px)}
+.tracking-mobile .tracking-pair-card .tracking-split{gap:5px}
+.tracking-mobile .tracking-pair-card .tracking-split>span{flex:1 1 0;white-space:normal;overflow-wrap:anywhere}
+.tracking-mobile .tracking-pair-card .tracking-split>span:last-child{text-align:right}
+.tracking-mobile .account-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tracking-mobile .forecast-card{padding:16px}
+.tracking-mobile .account-box{min-width:0}
+.tracking-mobile .person-status{overflow-wrap:anywhere}
+@media(max-width:420px){
+ .tracking-mobile .grid.summary-grid,.tracking-mobile .summary-grid>.tracking-payment-grid{gap:7px}
+ .tracking-mobile .summary-grid>.card{padding:10px 8px}
+ .tracking-mobile .summary-grid>.tracking-alert-card{padding:8px}
+ .tracking-mobile .tracking-pair-card .value{font-size:clamp(17px,5.3vw,21px)}
+ .tracking-mobile .tracking-pair-section .tracking-split{font-size:clamp(8px,2.25vw,9px)}
+ .tracking-mobile .account-fields{gap:7px}
+ .tracking-mobile .account-box{padding:9px 7px}
+ .tracking-mobile .account-box label{font-size:11px}
+ .tracking-mobile .account-box input{padding:10px 7px}
+}
+/* Trois rangées de synthèse : prévision/découvert, déjà/reste, puis solde réel. */
+.tracking-mobile .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+.tracking-mobile .summary-grid>.summary-tile,
+.tracking-mobile .summary-grid>.tracking-alert-card,
+.tracking-mobile .tracking-payment-grid>.tracking-pair-card{min-width:0;}
+.tracking-mobile .tracking-alert-card{border-color:#6d3d39;background:linear-gradient(145deg,#2b211f,#211c1b);}
+.tracking-mobile .tracking-overdraft{overflow-wrap:anywhere;}
+.tracking-mobile .tracking-payment-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+.tracking-mobile .tracking-pair-card .tracking-split{align-items:baseline;}
+.tracking-mobile .account-fields{grid-template-columns:repeat(2,minmax(0,1fr));}
+.tracking-mobile .account-box input{font-size:clamp(12px,4vw,16px);}
+.tracking-mobile .person-status{line-height:1.4;}
+.tracking-mobile .tracking-balance-explanation{margin:0 3px 20px;}
+@media(max-width:420px){
+ .tracking-mobile .summary-grid,.tracking-mobile .summary-grid>.tracking-payment-grid{gap:7px;}
+ .tracking-mobile .summary-tile{padding:10px 8px;}
+ .tracking-mobile .summary-grid>.tracking-alert-card{padding:8px;}
+ .tracking-mobile .summary-grid>.summary-tile:first-child .value{font-size:clamp(17px,5.2vw,22px);}
+ .tracking-mobile .summary-grid>.summary-tile:first-child .tracking-split{font-size:clamp(8px,2.35vw,10px);gap:3px;}
+ .tracking-mobile .tracking-pair-card .value{font-size:clamp(17px,5.2vw,21px);}
+ .tracking-mobile .tracking-pair-section .tracking-split{font-size:clamp(8px,2.2vw,9px);}
+ .tracking-mobile .account-fields{gap:7px;}
+ .tracking-mobile .account-box{padding:9px 7px;}
+ .tracking-mobile .account-box label{font-size:10px;}
+ .tracking-mobile .person-status{font-size:9px;}
+}
+
+
+/* Suivi : le solde et l’information de découvert occupent une même rangée. */
+.tracking-mobile .tracking-balance-overdraft-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(250px,1fr);gap:12px;align-items:stretch;min-width:0}
+.tracking-mobile .tracking-balance-column{min-width:0;display:flex;flex-direction:column}
+.tracking-mobile .tracking-balance-column>.forecast-card{width:100%;margin:0}
+.tracking-mobile .tracking-balance-column>.tracking-balance-explanation{margin:8px 3px 0}
+.tracking-mobile .tracking-balance-overdraft-layout>.tracking-alert-card{grid-column:auto;width:100%;min-width:0;margin:0;align-self:stretch}
+.tracking-mobile .tracking-balance-overdraft-layout>.tracking-alert-card>.tracking-overdraft{width:100%;margin:0}
+@media(max-width:519px){.tracking-mobile .tracking-balance-overdraft-layout{grid-template-columns:minmax(0,1fr)}}
+
+/* Accessibilité tactile et commentaires de paiement */
+.modal input,.modal select,.modal textarea{font-size:16px}
+.modal textarea{width:100%;min-height:76px;padding:12px 13px;color:var(--text);background:#111a17;border:1px solid var(--line);border-radius:12px;resize:vertical}
+[data-account-balance]{font-size:16px!important}
+.monthbar button,.close,.expense-total .danger,.payment-delete{position:relative}
+.monthbar button::before{content:"";position:absolute;inset:-5px}
+.close::before{content:"";position:absolute;inset:-5px}
+.expense-total .danger::before{content:"";position:absolute;inset:-8px}
+.expense-payment-line .payment-delete::before{content:"";position:absolute;inset:-4px -8px}
+.payment-comment,.chart-ledger-payment-comment{display:block;margin:2px 0 0;color:var(--muted);font-size:11px;line-height:1.35;overflow-wrap:anywhere}
+.expense-payment-entry{min-width:0;width:100%;border-top:1px solid var(--line);padding:3px 0}
+.expense-payment-entry .expense-payment-line{border-top:0}
+.expense-payment-entry .payment-edit{margin:0 0 0 4px;padding:4px 7px;color:var(--muted);border:1px solid var(--line);border-radius:8px;background:transparent;font-size:11px}
+.expense-payment-manage-row{grid-template-columns:minmax(0,1fr) auto auto auto}
+.expense-payment-manage-row>span{min-width:0;overflow-wrap:anywhere}
+.expense-payment-manage-row .payment-edit{padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--muted);font-size:11px}
+.expense-payment-manage-delete{min-width:44px;min-height:44px;padding:6px 8px!important;font-size:11px}
+@media(max-width:450px){.expense-payment-manage-row{grid-template-columns:minmax(0,1fr) auto auto}.expense-payment-manage-delete{grid-column:auto;justify-self:auto}}
+.expense-payment-entry>.payment-edit{display:block;min-height:36px;margin:4px 0 0 auto}
+.expense-payment-manage-row>.payment-edit{display:inline-flex;align-items:center;justify-content:center;min-height:40px}
+
+
+/* Correctifs de lisibilité mobile pour le journal des comptes et la synthèse d’accueil. */
+@media(max-width:480px){
+ .modalback:has(.chart-ledger-dialog) .chart-ledger-list{padding-top:10px;}
+ .modalback:has(.chart-ledger-dialog) .chart-ledger-row:has(.chart-ledger-add-payment){grid-template-columns:minmax(0,1fr);gap:8px;align-items:start;}
+ .modalback:has(.chart-ledger-dialog) .chart-ledger-row:has(.chart-ledger-add-payment) .chart-ledger-copy{grid-column:1;grid-row:1;min-width:0;}
+ .modalback:has(.chart-ledger-dialog) .chart-ledger-row:has(.chart-ledger-add-payment) .chart-ledger-end{grid-column:1;grid-row:2;display:grid;grid-template-columns:minmax(0,1fr);width:100%;justify-items:stretch;gap:7px;}
+ .modalback:has(.chart-ledger-dialog) .chart-ledger-row:has(.chart-ledger-add-payment) .chart-ledger-amount{justify-self:end;}
+ .modalback:has(.chart-ledger-dialog) .chart-ledger-add-payment{display:flex;align-items:center;justify-content:center;width:100%;min-width:0;min-height:44px;padding:8px 10px;font-size:14px;line-height:1.25;white-space:normal;text-align:center;}
+ .home-monthly-people{display:flex;flex-direction:column;align-items:stretch;gap:6px;min-width:0;white-space:normal;font-size:12px;letter-spacing:0;}
+ .home-monthly-people>span{display:flex;align-items:baseline;justify-content:space-between;gap:6px;width:100%;min-width:0;white-space:nowrap;}
+ .home-monthly-people .amount-drilldown{flex:0 0 auto;min-width:0;font-size:clamp(11px,3.2vw,13px);white-space:nowrap;}
+}
+
+
+/* Les journaux des modales du Suivi et de l’évolution défilent dans leur liste,
+   avec des en-têtes sticky compatibles Safari/iOS comme « Déjà payé ». */
+.chart-ledger-list{min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;}
+.chart-ledger-group-head{position:-webkit-sticky;position:sticky;top:env(safe-area-inset-top,0px);z-index:8;border-color:#34473b;background:#1b2921f5;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+.chart-ledger-dialog{overflow:visible;}
+
+/* En-têtes de groupe : chaque barre appartient à une section qui contient
+   tous ses éléments, tandis que le défilement vertical reste celui du document. */
+.expense-list{display:block;overflow:visible;-webkit-overflow-scrolling:auto}
+.expense-list>.expense-group{display:block;width:100%;margin:0 0 9px;overflow:visible}
+.expense-list>.expense-group>.expense-card+.expense-card{margin-top:9px}
+.expense-list>.expense-group>.breakdown-group-head{position:-webkit-sticky;position:sticky;top:var(--sticky-header-offset,env(safe-area-inset-top,0px));z-index:7;align-self:auto;flex:none;margin:0 0 6px;background:#1b2921f5;border-color:#34473b;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+body:has(#testDateBar[style*="display: flex"]) .expense-list>.expense-group>.breakdown-group-head{--sticky-header-offset:calc(env(safe-area-inset-top,0px) + var(--test-datebar-height,48px))}
+
+/* « Déjà payé » : un seul scroller vertical natif. Le conteneur modal ne doit
+   pas devenir l’ancêtre scrollant capturé par position:sticky sur iOS. */
+.breakdown-modal{display:flex;flex-direction:column;height:min(88dvh,800px);max-height:min(88dvh,800px);overflow:hidden;min-height:0}
+.breakdown-modal .breakdown-group>.breakdown-group-head{backdrop-filter:none;-webkit-backdrop-filter:none}
+.breakdown-modal>.breakdown-list{display:block;flex:1 1 auto;min-height:0;max-height:none;overflow-y:auto;overflow-x:clip;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain}
+.breakdown-modal .breakdown-group{display:block;margin:0 0 7px;overflow:visible}
+.breakdown-modal .breakdown-row{margin:0 0 7px}
+.breakdown-modal>.breakdown-total{position:static;flex:0 0 auto}
+
+/* Le journal « Évolution des comptes » défile dans sa liste dédiée; les
+   groupes du journal restent des blocs complets pour leur barre sticky. */
+.chart-ledger-dialog>.chart-ledger-list{display:block;flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:clip;-webkit-overflow-scrolling:touch}
+.chart-ledger-group-head{backdrop-filter:none;-webkit-backdrop-filter:none}
+
+/* Pas de scroll root artificiel via overflow-x:hidden sur iOS. */
+html,body{height:auto;overflow-x:clip}
+body{overflow-y:visible}
+/* Le détail regroupé du menu BUDGET (accueil) utilise le même scroll natif
+   que « Déjà payé » : seule la liste défile et chaque en-tête reste sticky
+   dans son groupe, y compris Safari/iOS. */
+.budget-breakdown-modal{display:flex;flex-direction:column;height:min(88dvh,800px);max-height:min(88dvh,800px);overflow:hidden;min-height:0}
+.budget-breakdown-modal>.breakdown-list{display:block;flex:1 1 auto;min-height:0;max-height:none;overflow-y:auto;overflow-x:clip;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain}
+.budget-breakdown-modal .breakdown-group{display:block;margin:0 0 7px;overflow:visible}
+.budget-breakdown-modal .breakdown-group>.breakdown-group-head{position:-webkit-sticky;position:sticky;top:env(safe-area-inset-top,0px);z-index:8;align-self:auto;display:flex;background:#1b2921f5;border-color:#34473b;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.budget-breakdown-modal .breakdown-row{margin:0 0 7px}
+
+@media(max-width:600px){
+ .modalback:has(.chart-ledger-dialog) .chart-ledger-actions{padding:4px 2px 8px}
+ .modalback:has(.chart-ledger-dialog) .chart-ledger-add-reimbursement{display:flex;align-items:center;justify-content:center;width:100%;min-width:0;min-height:44px;padding:8px 10px;font-size:14px;line-height:1.25;white-space:normal;text-align:center}
+}

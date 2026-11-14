@@ -1,0 +1,109 @@
+
+.chart-ledger-trigger{display:inline-flex;align-items:center;gap:5px;padding:2px 4px;border:0;border-radius:7px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}.chart-ledger-trigger:focus-visible{outline:2px solid #f3c773}.chart-ledger-dialog{width:min(620px,100%);max-height:min(88dvh,800px);display:flex;flex-direction:column;overflow:hidden}.chart-ledger-list{min-height:0;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:4px 2px 12px;display:block}.chart-ledger-group{display:block;margin:0 0 8px}.chart-ledger-group-head{position:-webkit-sticky;position:sticky;top:env(safe-area-inset-top,0px);align-self:start;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 11px;border:1px solid #34473b;border-radius:11px;background:#1b2921f5;backdrop-filter:blur(10px);color:#dce8dc;font-size:13px;font-weight:800}.chart-ledger-group-head strong{font-size:16px;letter-spacing:.02em}.chart-ledger-group-head b{white-space:nowrap;color:var(--lime);font-size:11px}.chart-ledger-group-summary{display:flex;align-items:center;justify-content:flex-end;gap:11px;white-space:nowrap}.chart-ledger-group-head .chart-ledger-count{color:var(--muted);font-size:11px;font-weight:650}.chart-ledger-group-head .chart-ledger-day-total{min-width:88px;text-align:right;color:var(--text);font-size:13px;font-variant-numeric:tabular-nums}.chart-ledger-group-head .chart-ledger-day-total.positive{color:var(--mint)}.chart-ledger-group-head .chart-ledger-day-total.negative{color:var(--red)}.chart-ledger-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:13px;background:#111a17;scroll-margin:16px}.chart-ledger-row.ledger-complete{opacity:.58}.chart-ledger-end{display:grid;grid-column:2;grid-row:1;justify-items:end;gap:7px}.chart-ledger-copy{grid-column:1;grid-row:1}.chart-ledger-toggle{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:10px;font-weight:750;white-space:nowrap;cursor:pointer}.chart-ledger-toggle input{width:22px;height:22px;margin:0;accent-color:var(--lime);cursor:pointer}.chart-ledger-row.reimbursement,.chart-ledger-row.settlement{border-left:3px solid #f59e0b}.chart-ledger-row.balance-adjustment{border-left:3px solid #ff6b6b}.chart-ledger-kind.balance-adjustment{background:#3a2020;color:#ff9b94}.chart-ledger-amount.negative{color:#ff8d86}.chart-ledger-amount.positive{color:#73d8b2}.balance-adjustment-delete{font-size:17px;font-weight:900;color:#ff6b6b!important;padding:2px 5px;border-radius:7px}.balance-adjustment-delete:hover{background:#ff6b6b22}.chart-ledger-row.today-focus{border-color:var(--gold);background:#f3c77318;animation:ledgerFocus 1.5s ease-out}.chart-ledger-copy{min-width:0;display:grid;gap:4px}.chart-ledger-title{font-size:13px;font-weight:750;overflow-wrap:anywhere}.chart-ledger-trigger.chart-ledger-title{display:block;width:100%;margin:0;padding:0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer}.chart-ledger-trigger.chart-ledger-title:hover{text-decoration:underline;text-decoration-color:var(--lime);text-underline-offset:3px}.chart-ledger-trigger.chart-ledger-title:focus-visible{outline:2px solid #f3c773;border-radius:4px}.chart-ledger-meta{font-size:11px;color:var(--muted);line-height:1.4}.chart-ledger-kind{width:max-content;padding:3px 7px;border-radius:999px;background:#26352e;color:var(--lime);font-size:9px;font-weight:800;text-transform:uppercase}.chart-ledger-kind.income{background:#102c36;color:#7dd3fc}.chart-ledger-kind.reimbursement,.chart-ledger-kind.settlement{background:#3a2a12;color:#fbbf24}.chart-ledger-amount{font-size:13px;font-weight:800;white-space:nowrap}.chart-ledger-amount.reimbursement,.chart-ledger-amount.settlement{color:#f59e0b}.chart-ledger-empty{text-align:center;padding:22px;color:var(--muted)}.chart-ledger-note{margin:0 0 8px;color:var(--muted);font-size:11px;line-height:1.5}@keyframes ledgerFocus{0%{box-shadow:0 0 0 5px #f3c77366}100%{box-shadow:0 0 0 2px #f3c77322}}@media(max-width:600px){.modalback:has(.chart-ledger-dialog){align-items:flex-end;padding:0}.chart-ledger-dialog{width:100%;max-height:88dvh;border-radius:20px 20px 0 0;padding:14px 14px calc(12px + var(--safe-b))}.chart-ledger-row{padding:10px;gap:6px}.chart-ledger-title{font-size:12px}}.chart-ledger-actions{display:flex;justify-content:flex-end;margin:0 0 8px}.account-month-table-dialog{width:min(900px,100%);max-height:min(92dvh,900px)}.account-month-table-wrap{min-height:0;display:flex;flex-direction:column}.account-month-table-scroll{max-height:70dvh;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px}.account-month-table{width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}.account-month-table th,.account-month-table td{padding:10px 9px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}.account-month-table th:first-child,.account-month-table td:first-child{text-align:left;white-space:normal;min-width:210px}.account-month-table thead th{position:sticky;top:0;z-index:1;background:#202b28;color:var(--muted);font-size:11px}.account-month-table td:first-child strong,.account-month-table td:first-child small{display:block}.account-month-table td:first-child strong{font-size:12px}.account-month-table td:first-child small{margin-top:3px;color:var(--muted);font-size:10px}.account-month-table .money-credit{color:var(--mint)}.account-month-table .money-debit{color:#ff8d86}.account-month-table .money-balance{font-weight:800;color:var(--text)}.account-month-table tfoot th,.account-month-table tfoot td{position:sticky;bottom:0;background:#202b28;font-weight:850;border-bottom:0}.account-month-table-dialog .modalhead{flex:none}@media(max-width:600px){.chart-ledger-actions .btn{width:100%}.account-month-table-dialog{max-height:88dvh;padding:14px 10px calc(12px + var(--safe-b))}.account-month-table-scroll{max-height:70dvh}.account-month-table th,.account-month-table td{padding:8px 6px;font-size:10px}.account-month-table th:first-child,.account-month-table td:first-child{min-width:145px}.account-month-table td:first-child strong{font-size:10px}.account-month-table td:first-child small{font-size:9px}}
+.chart-ledger-day-field{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:10px;font-weight:750;white-space:nowrap}.chart-ledger-day-field input{box-sizing:border-box;width:48px;height:34px;margin:0;padding:4px 5px;border:1px solid #496153;border-radius:9px;background:#101915;color:var(--text);font-size:13px;font-weight:700;line-height:1.2;font-family:inherit;text-align:center;font-variant-numeric:tabular-nums}.chart-ledger-day-field input::placeholder{color:#738078}.chart-ledger-day-field input:focus{outline:2px solid var(--lime);outline-offset:1px}.chart-ledger-day-field input::-webkit-inner-spin-button,.chart-ledger-day-field input::-webkit-outer-spin-button{opacity:.65}@media(max-width:600px){.chart-ledger-day-field{gap:4px;font-size:9px}.chart-ledger-day-field input{width:44px;height:32px}}
+
+/* Modales chronologiques : ne pas recouvrir la navigation, garder le contenu interne défilable. */
+.modalback:has(.chart-ledger-dialog){z-index:100;inset:0;align-items:center;padding:calc(12px + env(safe-area-inset-top,0px)) 14px calc(88px + env(safe-area-inset-bottom,0px));}
+.modal.chart-ledger-dialog,.modal.account-month-table-dialog{min-height:0;max-height:calc(100dvh - 116px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));overflow:hidden;display:flex;flex-direction:column;border-radius:22px;padding:16px;}
+.modal.chart-ledger-dialog>.modalhead,.modal.account-month-table-dialog>.modalhead{flex:0 0 auto;}
+.modal.chart-ledger-dialog>section.chart-ledger-dialog{flex:1 1 auto;min-height:0;overflow:hidden;display:flex;flex-direction:column;}
+.modal.chart-ledger-dialog .chart-ledger-list{flex:1 1 auto;min-height:0;max-height:none;overflow-y:auto;}
+.modal.account-month-table-dialog>.account-month-table-wrap{flex:1 1 auto;min-height:0;overflow:hidden;}
+.modal.account-month-table-dialog .account-month-table-scroll{flex:1 1 auto;min-height:0;max-height:none;overflow:auto;}
+.expense-single-line.paid,.expense-part-line.paid{opacity:.62;}
+.expense-single-line.paid .expense-payment-day>span,.expense-part-line.paid .expense-payment-day>span{color:var(--lime);}
+.expense-payment-day,.income-paid-day{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:11px;font-weight:700;white-space:nowrap;}
+.expense-payment-day input,.income-paid-day input{box-sizing:border-box;width:48px;height:36px;padding:4px;border:1px solid #496153;border-radius:9px;background:#101915;color:var(--text);font-family:inherit;font-size:14px;font-weight:700;line-height:1.2;text-align:center;font-variant-numeric:tabular-nums;}
+.expense-payment-day input:focus,.income-paid-day input:focus{outline:2px solid var(--lime);outline-offset:1px;}
+.expense-payment-day input::placeholder,.income-paid-day input::placeholder{color:#738078;}
+.expense-card.paid{border-color:#4f8a58;background:linear-gradient(110deg,#183522 0%,#17211e 58%);}
+.expense-card.paid .expense-paid-by{opacity:.8;}
+.expense-part-line.paid .expense-part-name,.expense-part-line.paid>b{opacity:.75;}
+.expense-payment-recorded{flex:0 0 auto;color:var(--lime);font-size:11px;font-weight:750;}
+.income-paid-day{justify-content:space-between;min-height:44px;flex:1;}
+.income-paid-day.received>span{color:var(--lime);}
+.income-paid-day input{width:50px;}
+.income-auto-received>.income-paid-day{min-width:0;}
+@media(max-width:600px){
+ .modalback:has(.chart-ledger-dialog){align-items:center;padding:calc(8px + env(safe-area-inset-top,0px)) 8px calc(84px + env(safe-area-inset-bottom,0px));}
+ .modal.chart-ledger-dialog,.modal.account-month-table-dialog{width:100%;max-height:calc(100dvh - 108px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));border-radius:20px;padding:13px 12px;}
+ .modal.chart-ledger-dialog>section.chart-ledger-dialog{padding:0;}
+ .expense-payment-day,.income-paid-day{gap:4px;font-size:10px;}
+ .expense-payment-day input,.income-paid-day input{width:44px;height:34px;font-size:13px;}
+}
+@media(min-width:601px){.modalback:has(.chart-ledger-dialog){padding:20px 16px 96px;}.modal.chart-ledger-dialog,.modal.account-month-table-dialog{max-height:min(800px,calc(100dvh - 136px));}}
+
+/* Registre chronologique des opérations de trésorerie */
+.chart-ledger-actions{flex-wrap:wrap;gap:8px}
+.month-operations-dialog{width:min(1120px,100%);max-height:min(92dvh,920px)}
+.month-operations-dialog>.month-operations-wrap{flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.month-operations-person{margin:12px 0 18px;padding:12px;border:1px solid var(--line);border-radius:16px;background:#111a17}
+.month-operations-person>h3{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 10px;font-size:16px}
+.month-operations-person>h3 span{color:var(--muted);font-size:11px;font-weight:650}
+.month-operations-person.julien>h3{color:#7dd3fc}.month-operations-person.carla>h3{color:#f0a6cb}
+.month-operations-scroll{overflow:auto;border:1px solid var(--line);border-radius:11px}
+.month-operations-table{width:100%;min-width:830px;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}
+.month-operations-table th,.month-operations-table td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+.month-operations-table thead th{position:sticky;top:0;z-index:1;background:#202b28;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.07em}
+.month-operations-table td:first-child{white-space:nowrap;color:var(--muted)}
+.month-operations-table td:nth-child(3){min-width:170px}.month-operations-table td:nth-child(3) strong,.month-operations-table td:nth-child(3) small{display:block}.month-operations-table td:nth-child(3) small{margin-top:3px;color:var(--muted);font-size:10px}
+.month-operations-table td:nth-child(4){max-width:180px;color:var(--muted);font-size:11px}
+.month-op-kind{display:inline-flex;padding:4px 7px;border:1px solid #3b4a42;border-radius:999px;background:#26352e;color:var(--lime);font-size:9px;font-weight:800;white-space:nowrap}
+.month-op-kind.income{background:#102c36;color:#7dd3fc}.month-op-kind.refund,.month-op-kind.settlement{background:#3a2a12;color:#fbbf24}.month-op-kind.real-balance,.month-op-kind.balance-adjustment{background:#3a2020;color:#ff9b94}
+.month-op-amount{font-weight:800;text-align:right!important;white-space:nowrap}.month-op-amount.positive{color:var(--mint)}.month-op-amount.negative{color:#ff8d86}
+.month-operations-table td:last-child{text-align:right;white-space:nowrap}.month-op-delete{padding:6px 9px;font-size:10px;white-space:nowrap}
+.month-operations-table tbody tr:last-child td{border-bottom:0}
+@media(max-width:600px){.month-operations-dialog{width:100%;max-height:calc(100dvh - 108px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));padding:12px 9px}.month-operations-person{padding:8px;margin:9px 0 14px}.month-operations-person>h3{font-size:14px}.month-operations-table{min-width:750px;font-size:11px}.month-operations-table th,.month-operations-table td{padding:8px 7px}.month-op-delete{min-height:34px}}
+
+.month-operations-dialog{display:flex;flex-direction:column;overflow:hidden}
+.month-operations-table{min-width:900px}
+.month-operations-table td.month-op-balance{font-weight:750;color:var(--text);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+.month-operations-table td:first-child .month-op-date{box-sizing:border-box;width:138px;min-width:125px;height:34px;padding:4px 6px;border:1px solid #496153;border-radius:8px;background:#101915;color:var(--text);font:inherit;font-size:11px;font-variant-numeric:tabular-nums}.month-operations-table td:first-child .month-op-date:focus{outline:2px solid var(--lime);outline-offset:1px}.month-operations-table td.month-op-amount{font-weight:750;white-space:nowrap;font-variant-numeric:tabular-nums}.month-operations-table td.month-op-amount.negative{color:#ff8d86}.month-operations-table td.month-op-amount.positive{color:var(--mint)}@media(max-width:600px){.month-operations-table td:first-child .month-op-date{width:128px;min-width:120px;height:34px;font-size:10px}}
+/* Repère visuel dédié aux soldes réellement saisis dans Opérations du mois. */
+.month-operations-table tbody tr.month-op-real-balance{background:linear-gradient(90deg,rgba(190,242,100,.085),rgba(190,242,100,.025) 56%,transparent)}
+.month-operations-table tbody tr.month-op-real-balance td:first-child{box-shadow:inset 3px 0 0 #bef264}
+.month-operations-table tbody tr.month-op-real-balance td:nth-child(3) strong{color:#d9f99d}
+.month-operations-table tbody tr.month-op-real-balance td.month-op-balance{color:#d9f99d}
+.month-op-kind.real-balance{background:#26341a;border-color:#566d2a;color:#d9f99d}
+
+
+/* Opérations du mois : présentation mobile dédiée, sans toucher au bureau. */
+@media(max-width:640px){
+ .modalback:has(.month-operations-dialog){align-items:stretch;justify-content:stretch;padding:0;}
+ .modal.month-operations-dialog{width:100%;height:100dvh;max-height:100dvh;min-height:0;overflow:hidden;display:flex;flex-direction:column;border:0;border-radius:0;padding:calc(8px + env(safe-area-inset-top,0px)) 12px calc(12px + env(safe-area-inset-bottom,0px));}
+ .month-operations-dialog>.modalhead{flex:0 0 auto;gap:10px;margin:0;padding:5px 0 11px;border-bottom:1px solid var(--line);}
+ .month-operations-dialog>.modalhead h2{min-width:0;font-size:clamp(16px,4.8vw,19px);line-height:1.2;}
+ .month-operations-dialog>.modalhead .close{width:44px;height:44px;flex:0 0 44px;}
+ .month-operations-dialog>.month-operations-wrap{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:clip;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;padding:10px 0 18px;}
+ .month-operations-dialog .chart-ledger-note{margin:0 0 9px;font-size:10px;line-height:1.4;}
+ .month-operations-person{min-width:0;margin:9px 0 13px;padding:9px;border-radius:14px;}
+ .month-operations-person>h3{margin:0 0 8px;font-size:14px;}
+ .month-operations-person>h3 span{font-size:10px;}
+ .month-operations-scroll{overflow:visible;border:0;border-radius:0;}
+ .month-operations-table{display:block;width:100%;min-width:0;border:0;border-collapse:separate;font-size:12px;}
+ .month-operations-table thead{display:none;}
+ .month-operations-table tbody{display:grid;gap:6px;}
+ .month-operations-table tbody tr{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-areas:"date date type type" "label label label action" "status amount balance balance";gap:4px 6px;min-width:0;padding:7px 8px;border:1px solid var(--line);border-radius:11px;background:#0d1613;}
+ .month-operations-table tbody tr.month-op-real-balance{background:linear-gradient(110deg,rgba(190,242,100,.1),#0d1613 80%);}
+ .month-operations-table tbody tr:last-child td{border-bottom:0;}
+ .month-operations-table td{display:flex;min-width:0;flex-direction:column;justify-content:center;gap:1px;padding:0;border:0;text-align:left;overflow:hidden;}
+ .month-operations-table td::before{display:none;}
+ .month-operations-table td:nth-child(1){grid-area:date;}
+ .month-operations-table td:nth-child(2){grid-area:type;align-items:flex-start;}
+ .month-operations-table td:nth-child(3){grid-area:label;}
+ .month-operations-table td:nth-child(4){grid-area:status;max-width:none;font-size:10px;white-space:nowrap;text-overflow:ellipsis;}
+ .month-operations-table td:nth-child(5){grid-area:amount;text-align:left!important;}
+ .month-operations-table td:nth-child(6){grid-area:balance;text-align:left!important;}
+ .month-operations-table td:nth-child(7){grid-area:action;align-items:flex-end;justify-content:center;}
+ .month-operations-table td:empty{display:none;}
+ .month-operations-table td[colspan]{grid-column:1/-1;align-items:center;min-height:48px;}
+ .month-operations-table td[colspan]::before{content:none;}
+ .month-operations-table td:nth-child(3) strong{display:block;max-width:100%;font-size:12px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+ .month-operations-table td:nth-child(3) small{display:block;max-width:100%;font-size:9px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+ .month-operations-table td.month-op-balance{font-weight:750;color:var(--text);text-align:left;white-space:nowrap;font-size:11px;}
+ .month-operations-table td.month-op-amount{font-weight:800;white-space:nowrap;text-align:left!important;font-size:11px;}
+ .month-operations-table td:first-child .month-op-date{width:100%;min-width:0;height:32px;padding:3px 5px;font-size:12px;}
+ .month-operations-table td .month-op-kind{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2;padding:3px 6px;font-size:8px;}
+ .month-operations-table .month-op-delete{display:flex;align-items:center;justify-content:center;width:auto;min-width:0;min-height:32px;height:32px;padding:4px 7px;font-size:9px;line-height:1;white-space:nowrap;}
+}

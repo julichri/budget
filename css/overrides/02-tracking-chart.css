@@ -1,0 +1,84 @@
+
+/* Suivi uniquement : total commun en blanc et ventilation des dépenses prévues. */
+.tracking-chart .chart-line.combined-tracking{stroke:#fff;stroke-width:3.2}.tracking-chart .chart-line.combined-tracking.combined-forecast{stroke-dasharray:6 5}.tracking-chart .balance-anchor-dot.combined-tracking{fill:#fff}.tracking-chart .balance-anchor-label.combined-tracking{fill:#fff}.tracking-chart .chart-line.spent.global-tracking,.tracking-chart .chart-line.planned.global-tracking{stroke:#fff}.tracking-chart .today-dot,.tracking-chart .income-cross-marker{fill:#fff}.tracking-chart-legend .legend-swatch.combined-tracking,.tracking-chart-legend .legend-swatch.spent.global-tracking{background:#fff}.tracking-split{display:flex;justify-content:space-between;gap:8px;margin-top:5px;font-size:11px;line-height:1.35;font-weight:700;font-variant-numeric:tabular-nums}.tracking-split span{white-space:nowrap}.tracking-split span:last-child{text-align:right}@media(max-width:390px){.tracking-split{font-size:10px}}
+
+/* Suivi · composition mobile-first isolée des autres onglets. */
+.tracking-mobile{width:100%;min-width:0;overflow-x:clip;padding-bottom:calc(16px + var(--safe-b))}
+.tracking-mobile .hero{font-size:clamp(29px,8vw,36px);margin:5px 0 16px}
+.tracking-mobile .sectionhead{margin:18px 1px 9px}
+.tracking-mobile .sectionhead h2{font-size:16px}
+.tracking-mobile .person-segments{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:4px;margin:0 -2px 12px;touch-action:pan-x}
+.tracking-mobile .person-segments::-webkit-scrollbar{display:none}
+.tracking-mobile .person-segment{flex:0 0 auto;min-width:94px;min-height:44px;padding:8px 14px;font-size:13px}
+.tracking-mobile .person-segment.selected.all{background:linear-gradient(105deg,#38bdf8,#f472b6);color:#101716;box-shadow:0 2px 12px #38bdf833}
+.tracking-mobile .grid.summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-items:stretch}
+.tracking-mobile .summary-grid>.card{width:100%;min-width:0;margin:0;padding:13px 14px;border-radius:16px}
+.tracking-mobile .tracking-payment-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-items:stretch}
+.tracking-mobile .tracking-payment-grid>.card{width:100%;min-width:0;margin:0;padding:13px 14px;border-radius:16px}
+.tracking-mobile .summary-tile{min-height:0}
+.tracking-mobile .summary-tile .label{margin-bottom:5px;font-size:11px}
+.tracking-mobile .summary-tile .value{font-size:clamp(21px,6vw,27px);line-height:1.12}
+.tracking-mobile .tracking-total:not(.person-color){background:none;color:#f3f7f1;-webkit-text-fill-color:currentColor}
+.tracking-mobile .tracking-split{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:nowrap;margin-top:7px;font-size:clamp(10px,3vw,12px)}
+.tracking-mobile .tracking-split span{min-width:0;white-space:nowrap}
+.tracking-mobile .tracking-split span:first-child{text-align:left}
+.tracking-mobile .tracking-split span:last-child{text-align:right}
+.tracking-debt{margin-top:9px;padding:9px 10px;border:1px solid #34443d;border-radius:12px;background:#111a17}.tracking-debt-title{font-size:12px;font-weight:750;line-height:1.5;color:var(--text)}.tracking-debt-amount{font-size:inherit!important;font-weight:850!important;white-space:nowrap}.tracking-debt-flow{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:7px;padding-top:7px;border-top:1px solid #ffffff14}.tracking-debt-flow-label{flex:0 0 auto;color:var(--muted);font-size:10px;font-weight:700}.tracking-debt-exchange{min-width:0;display:flex;align-items:center;justify-content:flex-end;gap:5px;font-size:10px;font-weight:800;font-variant-numeric:tabular-nums}.tracking-debt-exchange>span{white-space:nowrap}.tracking-debt-arrow{color:var(--muted);font-size:13px}.tracking-debt.balanced{color:#9ed8b8;background:#192a22;border-color:#365446;font-size:12px;font-weight:800}
+@media(max-width:390px){.tracking-debt{padding:8px}.tracking-debt-title{font-size:11px}.tracking-debt-flow{align-items:flex-start;flex-direction:column;gap:5px}.tracking-debt-exchange{width:100%;justify-content:space-between;font-size:10px}}
+.tracking-mobile .account-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.tracking-mobile .account-box{min-width:0;padding:11px;border-radius:13px}
+.tracking-mobile .account-box label{font-size:12px;min-height:16px}
+.tracking-mobile .account-box input,.tracking-mobile .balance-input input{min-height:48px;padding:11px 10px;font-size:16px}
+.tracking-mobile .person-status{line-height:1.4;overflow-wrap:anywhere}
+.tracking-mobile .forecast-card{padding:13px;border-radius:17px}
+.tracking-mobile .chart-card{width:100%;min-width:0;padding:12px 10px 11px;margin-bottom:9px;border-radius:17px}
+.tracking-mobile .chart-wrap{width:100%;min-width:0;overflow:hidden}
+.tracking-mobile .balance-chart{width:100%;height:220px;overflow:hidden}
+.tracking-mobile .chart-axis{font-size:11px}
+.tracking-mobile .chart-legend{gap:7px 11px;margin:8px 2px 3px;font-size:10px;line-height:1.35}
+.tracking-mobile .tracking-legend-amount.julien{color:#38bdf8;font-weight:750}
+.tracking-mobile .tracking-legend-amount.carla{color:#f472b6;font-weight:750}
+.tracking-mobile .tracking-legend-amount.combined{font-weight:800;background:linear-gradient(90deg,#38bdf8,#f472b6);background-clip:text;-webkit-background-clip:text;color:transparent}
+.tracking-mobile .legend-item{gap:5px}
+.tracking-mobile .legend-swatch{width:14px;flex:0 0 14px}
+.tracking-mobile .chart-note{font-size:11px;line-height:1.45;margin:7px 2px 0}
+.tracking-mobile .tracking-overdraft{margin-top:8px;padding:9px 10px}
+.tracking-mobile .note{font-size:11px;line-height:1.5;margin:10px 2px}
+@media(max-width:600px){.tracking-mobile .tracking-payment-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tracking-mobile .tracking-payment-grid>.card{padding:12px 10px}}
+@media(max-width:360px){
+ .tracking-mobile .summary-grid>.card{padding:12px}
+ .tracking-mobile .account-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ .tracking-mobile .account-box{padding:8px}
+ .tracking-mobile .account-box input{font-size:16px}
+ .tracking-mobile .balance-chart{height:210px}
+}
+@media(min-width:600px){.tracking-mobile .account-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.note[data-kind="error"]{color:#ff8d86}.note[data-kind="ok"]{color:#73d8b2}#testBanner{position:sticky;top:calc(env(safe-area-inset-top,0px) + 5px);z-index:4;text-align:center}
+
+/* Contrôles Dépenses : rangée compacte sur mobile. */
+.expense-control-row{display:flex;align-items:center;gap:7px;flex-wrap:nowrap;margin:0 0 12px;min-width:0}
+.expense-sort-label{flex:0 1 128px;min-width:82px;display:flex;align-items:center;gap:5px;color:var(--muted);font-size:10px;font-weight:750}
+.expense-sort,.expense-filter-select{min-width:0;width:100%;min-height:40px;padding:6px 22px 6px 8px;border:1px solid var(--line);border-radius:10px;background:#18211f;color:var(--text);font:inherit;font-size:11px;font-weight:700}
+.expense-search{flex:1 1 180px;min-width:65px;max-width:none;min-height:40px;padding:7px 9px;font-size:12px}
+.expense-filter-label{flex:0 1 105px;min-width:68px}
+.expense-paid-label{flex:0 1 116px;min-width:84px}
+.expense-control-row select:focus,.expense-search:focus{outline:2px solid #b7f36a66;outline-offset:1px;border-color:var(--lime)}
+@media(max-width:600px){.expense-control-row{gap:5px}.expense-sort-label{flex:1 1 0;min-width:0;gap:4px}.expense-sort-label>select{flex:1 1 auto;padding-left:6px;padding-right:16px}.expense-search{flex:1.35 1 0;min-width:0;width:0;padding-left:7px;padding-right:7px}.expense-filter-label{flex:.95 1 0;min-width:0}.expense-paid-label{flex:1.1 1 0;min-width:0}.expense-filter-select{padding-left:6px;padding-right:15px;font-size:10px}.expense-sort-label{font-size:9px}}
+@media(max-width:390px){.expense-control-row{gap:4px}.expense-sort-label{gap:3px}.expense-sort,.expense-filter-select{min-height:38px;font-size:9px}.expense-search{font-size:11px}.expense-sort-label>select{padding-left:4px;padding-right:13px}.expense-filter-select{padding-left:4px;padding-right:12px}}
+
+/* Dépenses : tri tactile en boutons, recherche sur sa propre ligne et bascule des payées. */
+.expense-controls{display:grid;gap:8px;margin:0 0 12px;min-width:0}
+.expense-sort-row{min-width:0}
+.expense-sort{display:flex;width:100%;gap:3px;padding:3px;margin:0;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.expense-sort .expense-sort-button{flex:1 1 0;min-width:0;min-height:38px;padding:6px 5px;border:0;border-radius:9px;background:transparent;color:var(--muted);font-size:12px;font-weight:700;white-space:nowrap;transition:background .16s ease,color .16s ease,box-shadow .16s ease}
+.expense-sort .expense-sort-button.selected{background:var(--lime);color:#132018;box-shadow:0 2px 8px #b7f36a22}
+.expense-search-row{display:flex;align-items:center;gap:8px;min-width:0}
+.expense-search-row .expense-search{flex:1 1 auto;width:100%;min-width:0;max-width:none;min-height:44px;padding:9px 12px;border:1px solid var(--line);border-radius:12px;background:#111a17;color:var(--text);font:inherit;font-size:14px;outline:none}
+.expense-search-row .expense-filter-label{flex:0 0 150px;min-width:0}
+.expense-search-row .expense-filter-select{min-height:44px}
+.expense-controls .paid-filter-row{display:flex;align-items:center;gap:8px;margin:0}
+.paid-filter{min-height:40px;padding:7px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--muted);font-size:12px;font-weight:750;transition:background .16s ease,color .16s ease,border-color .16s ease}
+.paid-filter.selected{border-color:#78c85c;background:#203527;color:#b7f36a}
+@media(max-width:600px){.expense-controls{gap:8px}.expense-sort{gap:2px;padding:3px}.expense-sort .expense-sort-button{min-height:42px;padding:5px 2px;font-size:clamp(9px,2.65vw,11px);letter-spacing:-.02em}.expense-search-row .expense-search{flex:1 1 100%;width:100%;min-height:46px;font-size:16px}.expense-search-row .expense-filter-label{display:none}.expense-controls .paid-filter-row{width:100%}.paid-filter{min-height:40px}}
+.amount-drilldown{appearance:none;padding:0;border:0;border-bottom:1px dotted currentColor;border-radius:0;background:transparent;color:inherit;font:inherit;font-weight:inherit;line-height:inherit;cursor:pointer;font-variant-numeric:tabular-nums}.amount-drilldown:hover,.amount-drilldown:focus-visible{color:var(--lime);outline:none;border-bottom-color:var(--lime)}.home-values .amount-drilldown{font-size:inherit}.breakdown-modal{padding:19px 16px calc(18px + var(--safe-b))!important}.breakdown-list{display:grid;gap:7px;max-height:min(60vh,570px);overflow:auto;overscroll-behavior:contain;padding:1px}.breakdown-group{display:grid;gap:6px}.breakdown-group-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:1;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 11px;border:1px solid #34473b;border-radius:11px;background:#1b2921f5;backdrop-filter:blur(10px);color:#dce8dc;font-size:12px;font-weight:750}.breakdown-group-head strong{min-width:0;overflow-wrap:anywhere}.expense-group{width:100%}.expense-group>.breakdown-group-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:7;margin-bottom:1px;background:#1b2921}body:has(.test-datebar[style*="display: flex"]) .expense-group>.breakdown-group-head{top:calc(env(safe-area-inset-top,0px) + var(--test-datebar-height,48px))}.breakdown-group-head b{white-space:nowrap;color:var(--lime);font-variant-numeric:tabular-nums}.breakdown-row{padding:10px 11px;border:1px solid var(--line);border-radius:12px;background:#111a17}.breakdown-top{display:flex;justify-content:space-between;align-items:flex-start;gap:9px}.breakdown-top strong{min-width:0;font-size:13px;overflow-wrap:anywhere}.breakdown-top>b{flex:0 0 auto;font-size:13px;font-variant-numeric:tabular-nums}.breakdown-meta{display:grid;gap:3px;margin-top:6px;font-size:10px;line-height:1.35;color:var(--muted)}.breakdown-total{position:sticky;bottom:-1px;display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;padding:13px;border:1px solid #53634b;border-radius:13px;background:#1e2a22;color:#d6e4d7;font-size:13px;font-weight:750}.breakdown-total strong{color:var(--lime);font-size:18px;font-variant-numeric:tabular-nums}@media(min-width:600px){.breakdown-modal{padding-bottom:20px!important}}
+.expense-total-value b.julien{color:#38bdf8}.expense-card:has(.expense-total-value b.julien){border-left:3px solid #38bdf8}

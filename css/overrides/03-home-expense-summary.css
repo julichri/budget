@@ -1,0 +1,10 @@
+
+/* Synthèse des dépenses : montants totaux et ventilation par personne. */
+.home-expense-metric .label{min-height:0;margin-bottom:8px;font-size:13px}
+.home-expense-row{min-width:0;padding:8px 0 9px;border-top:1px solid var(--line);display:grid;gap:3px}
+.home-expense-label{font-size:10px;line-height:1.2;color:var(--muted)}
+.home-expense-main{min-width:0;line-height:1.12;font-size:clamp(17px,5.6vw,25px);font-weight:780;letter-spacing:-.04em;color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap}
+.home-expense-people{display:flex;justify-content:space-between;align-items:center;gap:3px;min-width:0;font-size:clamp(9px,2.8vw,12px);line-height:1.2;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.home-expense-people>span{min-width:0}
+.home-expense-people .amount-drilldown{font-size:inherit}
+@media(max-width:370px){.home-expense-metric{padding-left:8px!important;padding-right:8px!important}.home-expense-main{font-size:clamp(16px,5.2vw,19px)}.home-expense-people{font-size:9px;letter-spacing:-.025em}}
