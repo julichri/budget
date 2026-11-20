@@ -1,5 +1,5 @@
-const CACHE='a-deux-budget-reorganise-v21';
-const SHELL=['./','./index.html','./manifest.json','./css/base.css','./css/overrides/01-test-mode.css','./css/overrides/02-tracking-chart.css','./css/overrides/03-home-expense-summary.css','./css/overrides/04-expense-controls.css','./css/overrides/05-chart-ledger.css','./css/overrides/06-tracking-mobile.css','./js/app.js','./js/ui-compat.js','./assets/icons/icon-192.png','./assets/icons/icon-512.png','./assets/icons/apple-touch-icon.png'];
+const CACHE='a-deux-budget-reorganise-v22';
+const SHELL=['./','./index.html','./manifest.json','./css/base.css','./css/overrides/01-test-mode.css','./css/overrides/02-tracking-chart.css','./css/overrides/03-home-expense-summary.css','./css/overrides/04-expense-controls.css','./css/overrides/05-chart-ledger.css','./css/overrides/06-tracking-mobile.css','./js/core/constants.js','./js/core/state-storage-functions.js','./js/core/app-state.js','./js/core/expense-calculations.js','./js/core/account-evolution.js','./js/views/render.js','./js/views/modals.js','./js/core/data-actions.js','./js/app.js','./js/ui-compat.js','./assets/icons/icon-192.png','./assets/icons/icon-512.png','./assets/icons/apple-touch-icon.png'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{
