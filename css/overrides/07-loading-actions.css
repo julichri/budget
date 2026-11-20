@@ -1,0 +1,21 @@
+/* Indicateur de chargement des données */
+.loading-indicator{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);left:50%;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;gap:9px;padding:9px 15px;border:1px solid var(--line);border-radius:999px;background:var(--panel2);color:var(--text);font-size:13px;font-weight:650;box-shadow:0 6px 22px rgba(0,0,0,.45);pointer-events:none}
+.loading-indicator[hidden]{display:none}
+.loading-spinner{width:18px;height:18px;border:2.5px solid rgba(183,243,106,.25);border-top-color:var(--lime);border-radius:50%;animation:loading-spin .8s linear infinite}
+@keyframes loading-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.loading-spinner{animation-duration:2.4s}}
+
+/* Boutons à droite du titre « Évolution des comptes » */
+.sectionhead-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:4px 10px}
+.sectionhead-actions button{white-space:nowrap}
+
+/* Lignes déjà réglées du relevé du mois (celles avec un bouton Supprimer) */
+.month-operations-table tbody tr.month-op-done td:not(:last-child){opacity:.5}
+.month-operations-table tbody tr.month-op-done:hover td:not(:last-child){opacity:.85}
+
+/* Boutons Suivi Julien (bleu) / Suivi Carla (rose) */
+.sectionhead-actions .btn.suivi-julien{color:#38bdf8;border-color:rgba(56,189,248,.55);background:rgba(56,189,248,.12)}
+.sectionhead-actions .btn.suivi-carla{color:#f472b6;border-color:rgba(244,114,182,.55);background:rgba(244,114,182,.12)}
+
+/* Lignes réglées : fond un peu plus clair que les autres lignes */
+.month-operations-table tbody tr.month-op-done{background-color:#1d2a26}
