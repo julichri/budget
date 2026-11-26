@@ -6,6 +6,9 @@ function recurrenceOccurs(item,targetMonth,sourceMonth=''){
  const start=/^\d{4}-\d{2}$/.test(item.recurrenceStart||'')?item.recurrenceStart:sourceMonth;
  if(!/^\d{4}-\d{2}$/.test(start)||targetMonth<start)return false;
  const [sy,sm]=start.split('-').map(Number),[ty,tm]=targetMonth.split('-').map(Number);
+ if(!Number.isInteger(ty)||!Number.isInteger(tm)||tm<1||tm>12)return false;
+ if(Array.isArray(item.activeMonths)&&item.activeMonths.length>0&&!item.activeMonths.includes(tm))return false;
+ if(/^\d{4}-(0[1-9]|1[0-2])$/.test(item.recurrenceEnd||'')&&targetMonth>item.recurrenceEnd)return false;
  const elapsed=(ty-sy)*12+(tm-sm);
  return elapsed>=0&&elapsed%frequency===0;
  }
