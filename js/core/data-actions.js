@@ -1,51 +1,53 @@
 'use strict';
 document.getElementById('prev').onclick=()=>moveMonth(-1);document.getElementById('next').onclick=()=>moveMonth(1);function moveMonth(delta){let [y,m]=monthKey.split('-').map(Number);let d=new Date(y,m-1+delta,1);monthKey=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;load()}document.getElementById('fab').onclick=()=>tab==='income'?incomeModal():expenseModal();
-async function copyPrevious(){
- if(!testMode&&!repository){toast('Connectez Supabase avant de copier un mois');return}
- const [y,m]=monthKey.split('-').map(Number),d=new Date(y,m-2,1),prev=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`,target=monthKey;
- try{
-  const prior=testMode?(testMonthData.has(prev)?cleanMonthState(testMonthData.get(prev)):fresh()):await repository.loadState(prev);
-  if(!prior||(!(prior.expenses||[]).length&&!(prior.incomes||[]).length&&!(prior.reimbursements?.[prev]||[]).length&&!(prior.realBalances&&Object.keys(prior.realBalances).length))){toast(`Aucune donnée trouvée pour ${monthName(prev)}`);return}
-  const existing=testMode?(testMonthData.has(target)?cleanMonthState(testMonthData.get(target)):fresh()):await repository.loadState(target);
-  const targetHasData=!!(existing&&((existing.expenses||[]).length||(existing.incomes||[]).length||(existing.reimbursements?.[target]||[]).length||(existing.realBalances&&Object.keys(existing.realBalances).length)||Object.keys(existing).some(key=>!['expenses','incomes','reimbursements','realBalances','currentBalanceJulien','currentBalanceCarla','currentBalanceDate'].includes(key))));
-  if(targetHasData&&!confirm(`Le mois ${monthName(target)} contient déjà des données. Les remplacer entièrement par celles de ${monthName(prev)} ?`))return;
-  const next=cleanMonthState(prior),shiftDate=value=>{const key=dateKey(value);if(!key||!key.startsWith(prev+'-'))return value;const day=Math.min(Number(key.slice(8,10)),new Date(Number(target.slice(0,4)),Number(target.slice(5,7)),0).getDate());return `${target}-${String(day).padStart(2,'0')}`};
-  const copyMonthMap=(map,dateValues=false)=>{if(!map||typeof map!=='object'||Array.isArray(map))return {};if(!Object.prototype.hasOwnProperty.call(map,prev))return {};const value=map[prev];return {[target]:dateValues?shiftDate(value):structuredClone(value)}};
-  next.expenses=(next.expenses||[]).filter(e=>!isHousingAdjustment(e)&&!e.autoAccountOperation&&!e.accountOperation).map(e=>{
-   const x={...e};
-   for(const field of ['paidMonths','paidDates','dayOverrides','paidDatesJulien','paidDatesCarla','dayOverridesJulien','dayOverridesCarla','reimbursedMonths'])x[field]=copyMonthMap(e[field],field==='paidDates'||field==='paidDatesJulien'||field==='paidDatesCarla');
-   // The copied expense is a fresh forecast: discard completed single/partial payments and their actual dates.
-   x.paidMonths={[target]:false};x.paid=false;x.paidDates={};x.dayOverrides={};x.paidDatesJulien={};x.paidDatesCarla={};x.dayOverridesJulien={};x.dayOverridesCarla={};
-   x.payments={};if(e.paidJulien!==undefined)x.paidJulien=false;if(e.paidCarla!==undefined)x.paidCarla=false;
-   if(e.paidDate&&String(e.paidDate).startsWith(prev+'-'))delete x.paidDate;
-   if(e.reimbursementDate)x.reimbursementDate=shiftDate(e.reimbursementDate);
-   return x;
-  });
-  next.incomes=(next.incomes||[]).map(i=>{const x={...i};for(const field of ['receivedDays','receivedDates','receivedDatesByDay','receivedMonths','dayOverrides'])x[field]=copyMonthMap(i[field],field==='receivedDates');for(const field of ['receivedDays','receivedDates','receivedDatesByDay','dayOverrides'])delete x[field][target];x.receivedMonths={[target]:false};return x});
-  next.realBalances={};next.balanceAdjustments=[];for(const [date,values] of Object.entries(prior.realBalances||{}))if(date.startsWith(prev+'-'))next.realBalances[shiftDate(date)]=structuredClone(values);
-  const balanceDates=Object.keys(next.realBalances).sort(),latestBalance=balanceDates.at(-1);next.currentBalanceDate=latestBalance||null;next.currentBalanceJulien=latestBalance?next.realBalances[latestBalance].J??null:null;next.currentBalanceCarla=latestBalance?next.realBalances[latestBalance].C??null:null;
-  next.reimbursements={};if(Array.isArray(prior.reimbursements?.[prev]))next.reimbursements[target]=prior.reimbursements[prev].map(r=>({...r,date:shiftDate(r.date),reimbursedMonths:copyMonthMap(r.reimbursedMonths)}));
-  next.autoHousingPaidMonths={};
-  if(testMode){data=next;migrateMonth(data,target);testMonthData.set(target,structuredClone(data));render();toast('Mois précédent copié (mode test, non sauvegardé)');return}
-  saveQueue=saveQueue.catch(()=>{}).then(()=>repository.saveState(next,target));
-  await saveQueue;
-  if(target!==monthKey)return;
-  data=next;migrateMonth(data,target);render();toast('Mois précédent copié et enregistré dans Supabase');
- }catch(err){console.error(err);toast('Impossible de copier : '+(err.message||'erreur Supabase'))}
-}
+function recurrenceOccurs(item,targetMonth,sourceMonth=''){
+ const frequency=Number(item?.recurrence)||0;
+ if(!Number.isInteger(frequency)||frequency<1)return false;
+ const start=/^\d{4}-\d{2}$/.test(item.recurrenceStart||'')?item.recurrenceStart:sourceMonth;
+ if(!/^\d{4}-\d{2}$/.test(start)||targetMonth<start)return false;
+ const [sy,sm]=start.split('-').map(Number),[ty,tm]=targetMonth.split('-').map(Number);
+ const elapsed=(ty-sy)*12+(tm-sm);
+ return elapsed>=0&&elapsed%frequency===0;
+ }
 function makeRepository(sb,homeCode){
  const db=sb,home=homeCode;
  const check=async q=>{const r=await q;if(r.error)throw r.error;return r.data};
  async function loadState(month){
   const row=await check(db.from('budget_months').select('state_meta,data,income_receipts').eq('home_code',home).eq('month_key',month).maybeSingle());
   const snapshot=row?.data;
-  // Chaque snapshot est la source de vérité mensuelle. Ne jamais reconstruire un mois
-  // absent depuis les tables de revenus/dépenses partagées à l’échelle du foyer.
+  // Un mois existant est strictement conservé. Les mois absents démarrent avec
+  // uniquement les éléments récurrents dont l’échéance tombe ce mois-ci.
   if(snapshot&&Array.isArray(snapshot.expenses)&&Array.isArray(snapshot.incomes)){
    for(const [id,status] of Object.entries(row?.income_receipts||{})){const income=snapshot.incomes.find(i=>String(i.id)===String(id));if(!income)continue;income.receivedMonths={...(income.receivedMonths||{}),[month]:!!status.received};income.receivedDates={...(income.receivedDates||{})};income.dayOverrides={...(income.dayOverrides||{})};if(status.date)income.receivedDates[month]=status.date;else delete income.receivedDates[month];if(status.day!=null)income.dayOverrides[month]=status.day;else delete income.dayOverrides[month]}
    return cleanMonthState(snapshot)
   }
-  return fresh();
+  if(row)return fresh();
+  const created=fresh();
+  const history=await check(db.from('budget_months').select('month_key,data').eq('home_code',home).lt('month_key',month).order('month_key',{ascending:false}));
+  const newestByKind={expenses:new Map(),incomes:new Map()};
+  for(const row of history||[]){
+   const state=row?.data;
+   for(const kind of ['expenses','incomes'])for(const item of state?.[kind]||[]){
+    const id=String(item?.id??'');
+    if(!id||newestByKind[kind].has(id)||!recurrenceOccurs(item,month,row.month_key))continue;
+    newestByKind[kind].set(id,{item,sourceMonth:row.month_key});
+   }
+  }
+  for(const kind of ['expenses','incomes'])for(const {item,sourceMonth} of newestByKind[kind].values()){
+   const copy=structuredClone(item);
+   if(kind==='expenses'){
+    if(isHousingAdjustment(copy)||copy.autoHousingAdjustment||copy.autoAccountOperation||copy.accountOperation||copy.debtRepayment)continue;
+    copy.paid=false;copy.paidMonths={[month]:false};copy.paidDates={};copy.dayOverrides={};copy.paidDatesJulien={};copy.paidDatesCarla={};copy.dayOverridesJulien={};copy.dayOverridesCarla={};copy.paidJulien=false;copy.paidCarla=false;copy.payments={};
+    if(copy.paidDate&&String(copy.paidDate).startsWith(sourceMonth+'-'))delete copy.paidDate;
+   }else{
+    if(copy.autoHousingAdjustment||copy.name==='Ajustement frais logement')continue;
+    copy.receivedMonths={[month]:false};copy.receivedDates={};copy.dayOverrides={};
+   }
+   if(copy.variableAmount)copy.amountEstimated=true;else delete copy.amountEstimated;
+   created[kind].push(copy);
+  }
+  await saveState(created,month);
+  return cleanMonthState(created);
  }
  async function saveRealBalance(date,person,value){
   const personne=person==='J'?'julien':'carla';
