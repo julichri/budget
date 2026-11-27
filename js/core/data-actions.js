@@ -1,17 +1,23 @@
 'use strict';
 document.getElementById('prev').onclick=()=>moveMonth(-1);document.getElementById('next').onclick=()=>moveMonth(1);function moveMonth(delta){let [y,m]=monthKey.split('-').map(Number);let d=new Date(y,m-1+delta,1);monthKey=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;load()}document.getElementById('fab').onclick=()=>tab==='income'?incomeModal():expenseModal();
 function recurrenceOccurs(item,targetMonth,sourceMonth=''){
- const frequency=Number(item?.recurrence)||0;
- if(!Number.isInteger(frequency)||frequency<1)return false;
- const start=/^\d{4}-\d{2}$/.test(item.recurrenceStart||'')?item.recurrenceStart:sourceMonth;
- if(!/^\d{4}-\d{2}$/.test(start)||targetMonth<start)return false;
- const [sy,sm]=start.split('-').map(Number),[ty,tm]=targetMonth.split('-').map(Number);
- if(!Number.isInteger(ty)||!Number.isInteger(tm)||tm<1||tm>12)return false;
- if(Array.isArray(item.activeMonths)&&item.activeMonths.length>0&&!item.activeMonths.includes(tm))return false;
- if(/^\d{4}-(0[1-9]|1[0-2])$/.test(item.recurrenceEnd||'')&&targetMonth>item.recurrenceEnd)return false;
- const elapsed=(ty-sy)*12+(tm-sm);
- return elapsed>=0&&elapsed%frequency===0;
+ if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(targetMonth||''))return false;
+ const [ty,tm]=targetMonth.split('-').map(Number);
+ if(Array.isArray(item?.activeMonths)){
+  const months=item.activeMonths.map(Number).filter(m=>Number.isInteger(m)&&m>=1&&m<=12);
+  if(!months.includes(tm))return false;
+ }else{
+  // Compatibilité avec l'ancien couple périodicité/mois de départ.
+  const frequency=Number(item?.recurrence)||0;
+  if(!Number.isInteger(frequency)||frequency<1)return false;
+  const start=/^\d{4}-(0[1-9]|1[0-2])$/.test(item.recurrenceStart||'')?item.recurrenceStart:sourceMonth;
+  if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(start)||targetMonth<start)return false;
+  const [sy,sm]=start.split('-').map(Number), elapsed=(ty-sy)*12+(tm-sm);
+  if(elapsed<0||elapsed%frequency!==0)return false;
  }
+ if(/^\d{4}-(0[1-9]|1[0-2])$/.test(item?.recurrenceEnd||'')&&targetMonth>item.recurrenceEnd)return false;
+ return true;
+}
 function makeRepository(sb,homeCode){
  const db=sb,home=homeCode;
  const check=async q=>{const r=await q;if(r.error)throw r.error;return r.data};
